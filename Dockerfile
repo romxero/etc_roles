@@ -6,7 +6,7 @@ LABEL MAINTAINER="RC <randall.white@czbiohub.org>"
 RUN microdnf -y update && \
 microdnf -y install epel-release && \
 microdnf -y install ansible ansible-test ansible-collection-community-general gcc make glibc autoconf m4 automake \
-ansible-collection-redhat-rhel_mgmt python3 python3-pip dh-autoreconf && \
+ansible-collection-redhat-rhel_mgmt python3 python3-pip && \
 pip3 install ansible-lint
 
 #pip to install the ansible lint stuff
