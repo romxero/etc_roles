@@ -1,5 +1,5 @@
 # used for CI/CD testing with our OS here at CZ Biohub
-FROM rockylinux:8
+FROM rockylinux:8-minimal
 LABEL MAINTAINER="RC <randall.white@czbiohub.org>"
 
 #base packages and install ansbile-lint for checking the syntax to our buildds 
