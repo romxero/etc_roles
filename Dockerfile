@@ -5,11 +5,11 @@ LABEL MAINTAINER="RC <randall.white@czbiohub.org>"
 #base packages and install ansbile-lint for checking the syntax to our buildds 
 RUN microdnf -y update && \
 microdnf -y install epel-release && \
-microdnf -y group install "Development Tools" && \
-microdnf -y install ansible ansible-test ansible-collection-community-general \
-ansible-collection-redhat-rhel_mgmt python3 python3-pip && \
+microdnf -y install ansible ansible-test ansible-collection-community-general gcc make glibc autoconf m4 automake \
+ansible-collection-redhat-rhel_mgmt python3 python3-pip dh-autoreconf && \
 pip3 install ansible-lint
 
+#pip to install the ansible lint stuff
 
 
 
