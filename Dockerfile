@@ -3,7 +3,7 @@ FROM rockylinux:8
 LABEL MAINTAINER="RC <randall.white@czbiohub.org>"
 
 #base packages and install ansbile-lint for checking the syntax to our buildds 
-RUN dnf update && \
+RUN dnf -y update && \
 dnf -y install ansible ansible-test ansible-collection-community-general \
 ansible-collection install python3 python3-pip && \
 pip3 install ansible-lint
