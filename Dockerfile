@@ -6,7 +6,7 @@ LABEL MAINTAINER="RC <randall.white@czbiohub.org>"
 RUN dnf -y update && \
 dnf -y install epel-release && \
 dnf -y install ansible ansible-test ansible-collection-community-general \
-ansible-collection install python3 python3-pip && \
+ansible-collection-redhat-rhel_mgmt python3 python3-pip && \
 pip3 install ansible-lint
 
 
