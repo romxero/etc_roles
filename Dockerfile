@@ -9,7 +9,7 @@ microdnf -y install ansible ansible-test ansible-collection-community-general gc
 ansible-collection-redhat-rhel_mgmt python3 python3-pip && \
 
 #pip to install the ansible lint stuff
-pip3 install ansible-lint
+pip3 install ansible ansible-lint
 
 #run the ansible lint command to check this repository
 RUN ansible-lint
