@@ -11,6 +11,6 @@ pip3 install ansible-lint
 
 #pip to install the ansible lint stuff
 
-
+ansible-lint
 
 
