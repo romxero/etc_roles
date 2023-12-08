@@ -1,0 +1,88 @@
+---
+#deployment to be used with rhel 9
+
+#Assert that we are working with RHEL9
+- name: "Checking for RHEL 9 compatibility"
+  assert:
+    that:
+      - ansible_os_family == 'RedHat'
+      - ansible_distribution_major_version == '9'
+    quiet: true
+    fail_msg: "ERROR: this role only supports RHEL 9 and its Derivatives!"
+
+#love on oracle linux 
+- name: Enable epel
+  ansible.builtin.package:
+    name: 'epel-release'
+    state: present
+  when: ansible_os_family == "RedHat"
+
+#make sure that we enable the repos and install the packages here 
+- name: Enable repos for rhel 9 deployments and Install RPMS required for deploying warewulf
+  ansible.builtin.package:
+    name:
+      - autoconf
+      - automake
+      - git
+      - gdb
+      - make
+      - m4
+      - gcc
+      - patch
+      - cmake
+      - libffi-devel
+      - xz-devel
+      - libzstd-devel
+      - libzip-devel
+      - golang
+      - tftp-server
+      - dhcp-server
+      - nfs-utils
+      - gpgme-devel
+      - libassuan-devel
+      enablerepo:
+      - powertools
+      - codeready-builder-for-rhel-8-x86_64-rpms
+      - crb
+    state: latest
+  ignore_errors: true
+  when: ansible_os_family == "RedHat" and ansible_distribution_major_version == '9'
+
+#make sure that our firewalling rules are in order
+- name: enable rsync traffic
+  ansible.posix.firewalld:
+    service: rsync
+    permanent: true
+    state: enabled
+- name: enable nfs
+  ansible.posix.firewalld:
+    service: nfs
+    permanent: true
+    state: enabled
+- name: enable tftp
+  ansible.posix.firewalld:
+    service: tftp
+    permanent: true
+    state: enabled
+#warewulf uses port 9873 for communication
+- name: open warewulf port 9873
+  ansible.posix.firewalld:
+    port: 9873/tcp
+    permanent: true
+    state: enabled
+
+#install warewulf here 
+- name: install warewulf packages
+  ansible.builtin.package:
+    name:
+      - warewulf
+    state: latest
+  ignore_errors: true
+
+#enabe and start/restart warewulfd service 
+- name: Enable warewulfd service 
+  ansible.builtin.systemd_service:
+    name: warewulfd
+    enabled: true
+    state: restarted
+
